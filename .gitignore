@@ -29,7 +29,7 @@ share/python-wheels/
 MANIFEST
 
 # Database
-db/
+Data.*
 
 # Installer logs
 pip-log.txt
