@@ -50,8 +50,12 @@ def danceoffs_post(context: Root, request: Request):
         return HTTPBadRequest('Two teams need to be assembled. (5 robot ids separated by comma)')
     
     robot_count = len(context[robots])
-    team1 = [i for i in list(map(int, request.params['team1'].split(','))) if i < robot_count]
-    team2 = [i for i in list(map(int, request.params['team2'].split(','))) if i < robot_count]
+
+    try:
+        team1 = [i for i in list(map(int, request.params['team1'].split(','))) if i < robot_count]
+        team2 = [i for i in list(map(int, request.params['team2'].split(','))) if i < robot_count]
+    except ValueError:
+        return HTTPBadRequest('Please provide the IDs of the participating robots as integers separated by commas (",").')
 
     if len(team1) != len(team2) != team_size:
         return HTTPBadRequest(f'Both teams need to contain {team_size} robots.')
